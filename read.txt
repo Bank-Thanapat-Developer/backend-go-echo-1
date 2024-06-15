@@ -1,0 +1,24 @@
+go get github.com/labstack/echo/v4
+github.com/golang-jwt/jwt
+
+
+Test
+
+//Register
+curl -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d "{\"username\":\"tnp\",\"password\":\"1234\"}"
+curl -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d "{\"username\":\"tnpV2\",\"password\":\"1234\"}"
+curl -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d "{\"username\":\"tnpV3\",\"password\":\"1234\"}"
+
+Login
+
+//Client
+//true
+curl -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\":\"tnpV2\",\"password\":\"1234\"}"
+//false
+curl -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\":\"tnpV4\",\"password\":\"1234\"}"
+
+//Admin
+//true
+curl -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\":\"admin\",\"password\":\"admin\"}"
+//false
+curl -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\":\"adminV4\",\"password\":\"adminV4\"}"
