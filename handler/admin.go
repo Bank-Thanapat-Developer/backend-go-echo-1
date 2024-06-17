@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -27,6 +28,8 @@ func NewAdminHandlerImpl(adminUsecase _usecase.AdminUsecase) AdminHandler {
 }
 
 func (h adminHandlerImpl) GetAllData(c echo.Context) error {
+	fmt.Println("============== GetAllData Admin ==============")
+
 	data, err := h.adminUsecase.GetAllData()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
@@ -34,17 +37,23 @@ func (h adminHandlerImpl) GetAllData(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func (h *adminHandlerImpl) GetByIdForAdmin(c echo.Context) error {
+func (h adminHandlerImpl) GetByIdForAdmin(c echo.Context) error {
+	fmt.Println("============== GetById Admin Handler ==============")
 	idStr := c.Param("id")
+	fmt.Println(idStr)
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "invalid user ID"})
 	}
 	user, err := h.adminUsecase.GetByIdForAdmin(id)
+	fmt.Println("============== GetData ==============")
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": err.Error()})
 	}
+	fmt.Println(user)
 	return c.JSON(http.StatusOK, user)
+	// return c.JSON(http.StatusOK, idStr)
+
 }
 
 func (h *adminHandlerImpl) UpdateUserForAdmin(c echo.Context) error {

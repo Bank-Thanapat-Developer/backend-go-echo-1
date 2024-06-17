@@ -12,7 +12,8 @@ import (
 type (
 	AuthUsecase interface {
 		Register(user *_entities.User) error
-		Login(user *_entities.User) (*_entities.Token, error)
+		Login(user *_entities.User) (map[string]interface{}, error)
+		// (*_entities.Token, error)
 	}
 
 	authUsecaseImpl struct {
@@ -44,8 +45,8 @@ func (a *authUsecaseImpl) Register(user *_entities.User) error {
 	return err
 }
 
-func (a *authUsecaseImpl) Login(user *_entities.User) (*_entities.Token, error) {
-	var token *_entities.Token
+func (a *authUsecaseImpl) Login(user *_entities.User) (map[string]interface{}, error) {
+	// var token *_entities.Token
 	data, err := a.userRepo.GetAllData()
 	if err != nil {
 		return nil, err
@@ -68,11 +69,17 @@ func (a *authUsecaseImpl) Login(user *_entities.User) (*_entities.Token, error) 
 				return nil, err
 			}
 
-			token = &_entities.Token{
-				Token: tokenString,
-			}
+			// token = &_entities.Token{
+			// 	Token: tokenString,
+			// }
 
-			return token, nil
+			// return token, nil
+
+			return map[string]interface{}{
+				"token":    tokenString,
+				"username": d.Username,
+				"role":     d.Role,
+			}, nil
 		}
 	}
 

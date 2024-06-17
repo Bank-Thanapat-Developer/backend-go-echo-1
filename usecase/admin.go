@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 
 	_entities "github.com/thanapatjitmung/entities"
@@ -44,7 +45,6 @@ func (a *adminUsecaseImpl) GetAllData() ([]*_entities.UserRes, error) {
 }
 
 func (a *adminUsecaseImpl) GetByIdForAdmin(id int) (*_entities.UserRes, error) {
-
 	data, err := a.userRepo.GetByIdForAdmin(id)
 	if err != nil {
 		return nil, err
@@ -54,6 +54,8 @@ func (a *adminUsecaseImpl) GetByIdForAdmin(id int) (*_entities.UserRes, error) {
 		Username: data.Username,
 		Role:     data.Role,
 	}
+	fmt.Println("============== GetById Admin UseCase ==============")
+	fmt.Println(dataResponse)
 	return dataResponse, nil
 }
 

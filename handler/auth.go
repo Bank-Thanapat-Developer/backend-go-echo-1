@@ -42,9 +42,9 @@ func (a *authHandlerImpl) Login(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, echo.Map{"error": err.Error()})
 	}
-	token, err := a.authUsecase.Login(user)
+	result, err := a.authUsecase.Login(user)
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, echo.Map{"error": err.Error()})
 	}
-	return c.JSON(http.StatusOK, echo.Map{"token": token})
+	return c.JSON(http.StatusOK, echo.Map{"token": result})
 }

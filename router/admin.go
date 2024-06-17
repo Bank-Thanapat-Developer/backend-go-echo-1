@@ -11,14 +11,14 @@ func AdminRouter(e *echo.Echo, h handler.AdminHandler) {
 
 	adminGroup := e.Group("/admin")
 	jwtMiddleware := middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningKey: jwtKey,
-		// TokenLookup: "header:x-auth-token",
+		SigningKey:  jwtKey,
 		TokenLookup: "header:Authorization",
 		AuthScheme:  "Bearer",
 	})
 
 	adminGroup.GET("/getdata", h.GetAllData, jwtMiddleware)
-	adminGroup.GET("/users/:id", h.GetByIdForAdmin, jwtMiddleware)
+	adminGroup.GET("/getdata/:id", h.GetByIdForAdmin, jwtMiddleware)
+	// adminGroup.GET("/users/:id", h.GetByIdForAdmin, jwtMiddleware)
 	adminGroup.PUT("/users/:id", h.UpdateUserForAdmin, jwtMiddleware)
 	adminGroup.DELETE("/users/:id", h.DeleteUserForAdmin, jwtMiddleware)
 }

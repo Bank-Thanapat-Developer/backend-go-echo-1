@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"sync"
 
 	_entities "github.com/thanapatjitmung/entities"
 )
@@ -27,6 +28,7 @@ type (
 	userRepoImpl struct {
 		clientFilePath string
 		adminFilePath  string
+		fileLock       sync.Mutex
 	}
 )
 
@@ -144,11 +146,16 @@ func (a *userRepoImpl) GetAllData() ([]*_entities.User, error) {
 }
 
 func (a *userRepoImpl) GetByIdForAdmin(id int) (*_entities.User, error) {
+	fmt.Println("============== GetById Admin Repo ==============")
 	data, err := a.GetAllData()
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(len(data))
 	for _, d := range data {
+		fmt.Println("============== Check Id ==============")
+		fmt.Println(id)
+		fmt.Println(d.ID)
 		if id == d.ID {
 			user := &_entities.User{
 				ID:       d.ID,
@@ -156,6 +163,7 @@ func (a *userRepoImpl) GetByIdForAdmin(id int) (*_entities.User, error) {
 				Password: d.Password,
 				Role:     d.Role,
 			}
+			fmt.Println("pass")
 			return user, nil
 		}
 	}
@@ -184,6 +192,9 @@ func (a *userRepoImpl) GetByIdForUser(id int) (*_entities.User, error) {
 	return nil, errors.New("user not found")
 }
 func (a *userRepoImpl) UpdateAdmin(adminData [][]string) error {
+	a.fileLock.Lock()
+	defer a.fileLock.Unlock()
+
 	adminFile, err := os.Create("admin.csv")
 	if err != nil {
 		return err
@@ -199,6 +210,9 @@ func (a *userRepoImpl) UpdateAdmin(adminData [][]string) error {
 }
 
 func (a *userRepoImpl) UpdateClient(clientData [][]string) error {
+	a.fileLock.Lock()
+	defer a.fileLock.Unlock()
+
 	clientFile, err := os.Create("client.csv")
 	if err != nil {
 		return err
