@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -33,7 +32,7 @@ func (h *clientHandlerImpl) GetAllData(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
-	fmt.Println(data)
+	// fmt.Println(data)
 	return c.JSON(http.StatusOK, data)
 }
 func (h *clientHandlerImpl) GetProfile(c echo.Context) error {

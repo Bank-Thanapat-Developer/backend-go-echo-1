@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 
 	_entities "github.com/thanapatjitmung/entities"
@@ -54,8 +53,8 @@ func (a *adminUsecaseImpl) GetByIdForAdmin(id int) (*_entities.UserRes, error) {
 		Username: data.Username,
 		Role:     data.Role,
 	}
-	fmt.Println("============== GetById Admin UseCase ==============")
-	fmt.Println(dataResponse)
+	// fmt.Println("============== GetById Admin UseCase ==============")
+	// fmt.Println(dataResponse)
 	return dataResponse, nil
 }
 
@@ -66,7 +65,7 @@ func (a *adminUsecaseImpl) UpdateUserForAdmin(id int, user *_entities.UserRes) e
 		return err
 	}
 	for _, checkUsername := range data {
-		if user.Username == checkUsername.Username {
+		if user.Username == checkUsername.Username && id != checkUsername.ID {
 			return errors.New("username already exists")
 		}
 	}

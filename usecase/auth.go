@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"math/rand"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -87,5 +88,7 @@ func (a *authUsecaseImpl) Login(user *_entities.User) (map[string]interface{}, e
 }
 
 func generateUniqueID() int {
-	return int(time.Now().UnixNano())
+	const maxDigits = 10000000000
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(maxDigits)
 }

@@ -140,7 +140,7 @@ func (a *userRepoImpl) GetAllData() ([]*_entities.User, error) {
 	}
 
 	data = append(data, dataAdmin...)
-	fmt.Println(len(data))
+	// fmt.Println(len(data))
 
 	return data, nil
 }
@@ -175,10 +175,10 @@ func (a *userRepoImpl) GetByIdForUser(id int) (*_entities.User, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(id)
+	// fmt.Println(id)
 
 	for _, d := range data {
-		fmt.Println(d.ID)
+		// fmt.Println(d.ID)
 		if id == d.ID {
 			user := &_entities.User{
 				ID:       d.ID,

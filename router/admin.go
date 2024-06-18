@@ -18,7 +18,6 @@ func AdminRouter(e *echo.Echo, h handler.AdminHandler) {
 
 	adminGroup.GET("/getdata", h.GetAllData, jwtMiddleware)
 	adminGroup.GET("/getdata/:id", h.GetByIdForAdmin, jwtMiddleware)
-	// adminGroup.GET("/users/:id", h.GetByIdForAdmin, jwtMiddleware)
 	adminGroup.PUT("/users/:id", h.UpdateUserForAdmin, jwtMiddleware)
 	adminGroup.DELETE("/users/:id", h.DeleteUserForAdmin, jwtMiddleware)
 }
